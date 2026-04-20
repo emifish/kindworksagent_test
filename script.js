@@ -18,6 +18,14 @@ function readValue(id) {
   return document.getElementById(id).value.trim();
 }
 
+function readRating(id) {
+  const raw = readValue(id);
+  if (!raw) return null;
+  const parsed = Number(raw);
+  if (Number.isNaN(parsed)) return null;
+  return Math.max(1, Math.min(5, parsed));
+}
+
 function gradeFromChecks() {
   const checks = Array.from(document.querySelectorAll(".grade-input"));
   const checked = checks.filter((item) => item.checked).length;
@@ -66,11 +74,28 @@ function collectStages() {
   return results;
 }
 
+function formatPersona([alias, desc], idx) {
+  const name = alias || "Unnamed";
+  const description = desc || "No description";
+  return `- Persona ${idx + 1}: ${name} (${description})`;
+}
+
+function formatStage(stage) {
+  return [
+    `- Stage ${stage.i}: ${stage.name || "Unnamed"}`,
+    `  Touchpoints: ${stage.touchpoints || "N/A"}`,
+    `  Wants/Needs: ${stage.needs || "N/A"}`,
+    `  Moment of truth: ${stage.truth || "N/A"}`
+  ].join("\n");
+}
+
 document.getElementById("generate").addEventListener("click", () => {
   const ratings = ["impactClient", "timeToTask", "emotionClient", "emotionWorker", "costOfDelay"]
-    .map((id) => Number(readValue(id)) || 0)
-    .map((n) => Math.max(1, Math.min(5, n)));
-  const severity = ratings.reduce((sum, value) => sum + value, 0) / ratings.length;
+    .map((id) => readRating(id))
+    .filter((rating) => rating !== null);
+  const severity = ratings.length
+    ? ratings.reduce((sum, value) => sum + value, 0) / ratings.length
+    : 0;
   const grade = gradeFromChecks();
   const stages = collectStages();
   const stageCountNote =
@@ -96,17 +121,12 @@ document.getElementById("generate").addEventListener("click", () => {
     "",
     "Personas",
     personas.length
-      ? personas.map(([alias, desc], idx) => `- Persona ${idx + 1}: ${alias || "Unnamed"} (${desc || "No description"})`).join("\n")
+      ? personas.map((persona, idx) => formatPersona(persona, idx)).join("\n")
       : "- No personas entered",
     "",
     "Workflow stages and moments of truth",
     stages.length
-      ? stages
-          .map(
-            (stage) =>
-              `- Stage ${stage.i}: ${stage.name || "Unnamed"}\n  Touchpoints: ${stage.touchpoints || "N/A"}\n  Wants/Needs: ${stage.needs || "N/A"}\n  Moment of truth: ${stage.truth || "N/A"}`
-          )
-          .join("\n")
+      ? stages.map((stage) => formatStage(stage)).join("\n")
       : "- No stage details entered",
     `- ${stageCountNote}`,
     "",
