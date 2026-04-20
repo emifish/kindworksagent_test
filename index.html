@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Kindworks Intake</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main>
+      <h1>Kindworks Discovery Intake</h1>
+      <p>
+        Capture experience mapping and problem prioritization data before your consulting
+        session.
+      </p>
+
+      <section>
+        <h2>1) Organization & Goal</h2>
+        <label>Organization name <input id="orgName" type="text" /></label>
+        <label>Mission / social impact goal <textarea id="mission"></textarea></label>
+      </section>
+
+      <section>
+        <h2>2) Clarify the Most Impactful Problem</h2>
+        <label>Most impactful problem to solve <textarea id="coreProblem"></textarea></label>
+        <label>Problem description <textarea id="problemDescription"></textarea></label>
+        <label>Likely root cause(s) <textarea id="rootCause"></textarea></label>
+      </section>
+
+      <section>
+        <h2>3) Quantify the Problem (1 low - 5 high)</h2>
+        <div class="grid">
+          <label>Impact to end client <input id="impactClient" type="number" min="1" max="5" value="3" /></label>
+          <label>Time to complete task <input id="timeToTask" type="number" min="1" max="5" value="3" /></label>
+          <label>End client emotional friction <input id="emotionClient" type="number" min="1" max="5" value="3" /></label>
+          <label>Internal worker emotional friction <input id="emotionWorker" type="number" min="1" max="5" value="3" /></label>
+          <label>Cost of not fixing <input id="costOfDelay" type="number" min="1" max="5" value="3" /></label>
+        </div>
+      </section>
+
+      <section>
+        <h2>4) Core Personas</h2>
+        <div class="grid">
+          <label>Persona 1 alias <input id="persona1Alias" type="text" /></label>
+          <label>Persona 1 description <input id="persona1Desc" type="text" /></label>
+          <label>Persona 2 alias <input id="persona2Alias" type="text" /></label>
+          <label>Persona 2 description <input id="persona2Desc" type="text" /></label>
+          <label>Persona 3 alias <input id="persona3Alias" type="text" /></label>
+          <label>Persona 3 description <input id="persona3Desc" type="text" /></label>
+        </div>
+      </section>
+
+      <section>
+        <h2>5) Workflow Stages (5-7 recommended)</h2>
+        <p>For each stage include touchpoints, wants/needs, and moments of truth.</p>
+        <div id="stages"></div>
+      </section>
+
+      <section>
+        <h2>6) Technology & Automation Grade</h2>
+        <div class="grid checks">
+          <label><input class="grade-input" type="checkbox" /> Data is centralized and accessible</label>
+          <label><input class="grade-input" type="checkbox" /> Core workflows are documented</label>
+          <label><input class="grade-input" type="checkbox" /> Teams use shared digital tools</label>
+          <label><input class="grade-input" type="checkbox" /> Manual repeat tasks are identified</label>
+          <label><input class="grade-input" type="checkbox" /> At least one workflow is automated</label>
+          <label><input class="grade-input" type="checkbox" /> Team tracks key outcomes consistently</label>
+          <label><input class="grade-input" type="checkbox" /> Staff have AI literacy/training</label>
+          <label><input class="grade-input" type="checkbox" /> AI/automation pilots exist with governance</label>
+        </div>
+      </section>
+
+      <button id="generate" type="button">Generate Summary</button>
+
+      <section>
+        <h2>Intake Summary</h2>
+        <pre id="summary"></pre>
+      </section>
+    </main>
+    <script src="./script.js"></script>
+  </body>
+  </html>
