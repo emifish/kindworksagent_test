@@ -10,4 +10,4 @@ This repository now includes a lightweight browser-based intake application for:
 
 ## Run locally
 
-Open `/home/runner/work/kindworksagent_test/kindworksagent_test/index.html` in a browser.
+Open `index.html` in a browser.
